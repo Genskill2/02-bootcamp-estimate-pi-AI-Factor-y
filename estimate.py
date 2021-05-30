@@ -1,5 +1,46 @@
 import math
 import unittest
+import random
+
+# functions for wallis pi construction
+
+def wallis(nIter):
+	prod=1;
+	for i in range(1,nIter+1):
+		exp=(4*i*i)/((4*i*i)-1)
+		prod*=exp;
+
+	prod*=2
+	return prod
+
+
+# function to calculate distance from origin
+# check if its <=(0.5)(inside circle)
+def distanceChk(x,y):
+
+	d=((x-0.5)**2+(y-0.5)**2)**0.5
+	if(d<=0.5):
+		return True
+	else:
+		return False
+
+# function to calculate pi using monte carlo
+def monte_carlo(nThrows):
+
+	countCircle=0
+	countSquare=0
+	for _ in range(nThrows):
+		x=random.random()
+		y=random.random()
+
+		if(distanceChk(x,y)):
+			countCircle+=1
+		
+		countSquare+=1
+
+	piVal=4*(countCircle/countSquare)
+	return piVal
+
 
 class TestWallis(unittest.TestCase):
     def test_low_iters(self):
@@ -30,3 +71,5 @@ class TestMC(unittest.TestCase):
     
 if __name__ == "__main__":
     unittest.main()
+
+
